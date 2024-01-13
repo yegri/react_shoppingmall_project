@@ -1,0 +1,20 @@
+@import "products";
+@import "cart";
+
+body {
+  margin: 0;
+}
+
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.gnb {
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+  }
+}
