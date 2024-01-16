@@ -1,3 +1,4 @@
+import request, { RequestDocument } from "graphql-request";
 import {
   useQuery,
   useMutation,
@@ -32,10 +33,10 @@ export const getClient = (() => {
 })();
 
 // 기본 url
-const BASE_URL = "https://fakestoreapi.com";
+const BASE_URL = "/";
 
-// async로 요청
-export const fetcher = async ({
+// resetFetcher async로 요청
+export const restFetcher = async ({
   method,
   path,
   body,
@@ -88,6 +89,10 @@ export const fetcher = async ({
     console.error(err);
   }
 };
+
+// graphqlFetcher
+export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
+  request<T>(BASE_URL, query, variables);
 
 // 쿼리 키 만들기
 export const QueryKeys = {
