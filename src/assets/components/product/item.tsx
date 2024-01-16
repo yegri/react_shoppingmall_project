@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Product } from "../../../graphql/products";
+import { useMutation } from "react-query";
+import { graphqlFetcher } from "../../../queryClient";
+import { ADD_CART, Cart } from "../../../graphql/cart";
 
-const ProductItem = ({
-  imageUrl,
-  price,
-  title,
-  description,
-  createdAt,
-  id,
-}: Product) => {
+const ProductItem = ({ imageUrl, price, title, id }: Product) => {
+  const { mutate: addCart } = useMutation((id: string) =>
+    graphqlFetcher(ADD_CART, { id })
+  );
+
   return (
     <li className="products-item">
       <Link to={`/products/${id}`}>
@@ -16,6 +16,9 @@ const ProductItem = ({
         <img className="products-item__image" src={imageUrl} />
         <span className="products-item__price">${price}</span>
       </Link>
+      <button className="product-item__add-cart" onClick={() => addCart(id)}>
+        장바구니 담기
+      </button>
     </li>
   );
 };

@@ -35,7 +35,7 @@ export const getClient = (() => {
 // 기본 url
 const BASE_URL = "/";
 
-// resetFetcher async로 요청
+// restFetcher async로 요청
 export const restFetcher = async ({
   method,
   path,
@@ -62,7 +62,7 @@ export const restFetcher = async ({
     const fetchOptions: RequestInit = {
       method,
       headers: {
-        "Contnet-Type": "application/json",
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": BASE_URL,
       },
     };
@@ -97,4 +97,5 @@ export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
 // 쿼리 키 만들기
 export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
+  CART: "CART",
 };
