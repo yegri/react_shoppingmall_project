@@ -90,9 +90,11 @@ export const restFetcher = async ({
   }
 };
 
-// graphqlFetcher
-export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
-  request<T>(BASE_URL, query, variables);
+export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
+  request(`${BASE_URL}`, query, variables, {
+    "Content-Type": "application/json",
+    // "Access-Control-Allow-Origin": BASE_URL,
+  });
 
 // 쿼리 키 만들기
 export const QueryKeys = {
