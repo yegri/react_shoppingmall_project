@@ -21,8 +21,8 @@ const PaymentModal = ({
           <p>정말 결제할까요?</p>
 
           <div>
-            <button>예</button>
-            <button>아니오</button>
+            <button onClick={proceed}>예</button>
+            <button onClick={cancel}>아니오</button>
           </div>
         </div>
       </div>

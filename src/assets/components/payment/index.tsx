@@ -8,12 +8,7 @@ import { useMutation } from "react-query";
 import { graphqlFetcher } from "../../../queryClient";
 import { EXECUTE_PAY } from "../../../graphql/payment";
 
-type PayInfo = {
-  id: string;
-  amount: number;
-};
-
-type PaymentInfos = PayInfo[];
+type PaymentInfos = string[];
 
 const PaymentIndex = () => {
   const navigate = useNavigate();
@@ -33,9 +28,10 @@ const PaymentIndex = () => {
   const proceed = () => {
     // 결제진행!
 
-    const payInfos = checkedCartData.map(({ id, amount }) => ({ id, amount }));
+    const payInfos = checkedCartData.map(({ id }) => id);
     executePay(payInfos);
     setCheckedCartData([]);
+    alert("결제 완료되었습니다.");
     navigate("/products", { replace: true });
   };
 

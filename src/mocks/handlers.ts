@@ -97,7 +97,10 @@ export const handlers = [
   }),
 
   // 결제 실행
-  graphql.mutation(EXECUTE_PAY, ({ variables }, res, ctx) => {
-    return res();
+  graphql.mutation(EXECUTE_PAY, ({ variables: ids }, res, ctx) => {
+    ids.forEach((id: string) => {
+      delete cartData[id];
+    });
+    return res(ctx.data(ids));
   }),
 ];
