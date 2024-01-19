@@ -20,8 +20,8 @@ export const getClient = (() => {
         defaultOptions: {
           queries: {
             // 캐시타임 : 이 시간 안에는 다시 상세페이지 들어가도 요청 안 함
-            cacheTime: 1000 * 60 * 60 * 24,
-            staleTime: 1000 * 60,
+            cacheTime: Infinity,
+            staleTime: Infinity,
             refetchOnMount: false,
             refetchOnReconnect: false,
             refetchOnWindowFocus: false,
@@ -90,10 +90,10 @@ export const restFetcher = async ({
   }
 };
 
-export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
-  request(`${BASE_URL}`, query, variables, {
+export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
+  request<T>(`${BASE_URL}`, query, variables, {
     "Content-Type": "application/json",
-    // "Access-Control-Allow-Origin": BASE_URL,
+    "Access-Control-Allow-Origin": BASE_URL,
   });
 
 // 쿼리 키 만들기

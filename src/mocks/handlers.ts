@@ -1,7 +1,13 @@
 import { graphql } from "msw";
 import { v4 as uuid } from "uuid";
 import GET_PRODUCTS, { GET_PRODUCT } from "../graphql/products";
-import GET_CART, { ADD_CART, Cart } from "../graphql/cart";
+import GET_CART, {
+  ADD_CART,
+  Cart,
+  DELETE_CART,
+  UPDATE_CART,
+} from "../graphql/cart";
+import { EXECUTE_PAY } from "../graphql/payment";
 
 // 상품 mock data
 const mock_products = (() =>
@@ -60,5 +66,38 @@ export const handlers = [
     newCarData[id] = newItem;
     cartData = newCarData;
     return res(ctx.data(newItem));
+  }),
+
+  // 장바구니 업데이트
+  graphql.mutation(UPDATE_CART, (req, res, ctx) => {
+    const newData = { ...cartData };
+    const { id, amount } = req.variables;
+
+    if (!newData[id]) {
+      throw new Error("없는 데이터입니다");
+    }
+
+    const newItem = {
+      ...newData[id],
+      amount,
+    };
+
+    newData[id] = newItem;
+    cartData = newData;
+
+    return res(ctx.data(newItem));
+  }),
+
+  // 장바구니 지우기
+  graphql.mutation(DELETE_CART, ({ variables: { id } }, res, ctx) => {
+    const newData = { ...cartData };
+    delete newData[id];
+    cartData = newData;
+    return res(ctx.data(id));
+  }),
+
+  // 결제 실행
+  graphql.mutation(EXECUTE_PAY, ({ variables }, res, ctx) => {
+    return res();
   }),
 ];
