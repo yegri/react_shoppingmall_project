@@ -1,8 +1,13 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
+import schema from "./schema";
+import resolvers from "./resolvers";
 
 (async () => {
-  const server = new ApolloServer(null);
+  const server = new ApolloServer({
+    typeDefs: schema,
+    resolvers,
+  });
 
   const app = express();
 
@@ -12,7 +17,7 @@ import { ApolloServer } from "apollo-server-express";
     app,
     path: "/graphql",
     cors: {
-      origin: ["http://localhost:5173"],
+      origin: ["http://localhost:5173", "https://studio.apollographql.com"],
       credentials: true,
     },
   });

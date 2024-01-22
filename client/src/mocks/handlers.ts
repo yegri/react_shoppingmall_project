@@ -12,7 +12,7 @@ import { EXECUTE_PAY } from "../graphql/payment";
 // 상품 mock data
 const mock_products = (() =>
   Array.from({ length: 20 }).map((_, i) => ({
-    id: uuid(),
+    id: i + 1 + "",
     imageUrl: `https://source.unsplash.com/200x150/?nature/${i + 1}`,
     price: 50000,
     title: `임시상품${i + 1}`,
