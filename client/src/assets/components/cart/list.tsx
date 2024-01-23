@@ -111,6 +111,7 @@ const CartList = ({ items }: { items: Cart[] }) => {
           ))}
         </ul>
       </form>
+
       <WillPay submitTitle="결제창으로" handleSubmit={handleSubmit} />
     </div>
   );

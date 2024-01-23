@@ -1,9 +1,9 @@
 import { useRecoilValue } from "recoil";
 import checkedCartState from "../../../recoils/cart";
 import ItemData from "../cart/itemData";
-import { Link, useNavigate } from "react-router-dom";
 import { SyntheticEvent } from "react";
 
+// 결제예정
 const WillPay = ({
   submitTitle,
   handleSubmit,
@@ -11,6 +11,7 @@ const WillPay = ({
   submitTitle: string;
   handleSubmit: (e: SyntheticEvent) => void;
 }) => {
+  // reduce로 체크된 상품데이터를 누적 합산한 값
   const checkedItems = useRecoilValue(checkedCartState);
 
   const totalPrice = checkedItems.reduce((res, { price, amount }) => {
