@@ -5,47 +5,51 @@ import { forwardRef, ForwardedRef, SyntheticEvent } from "react";
 import ItemData from "./itemData";
 
 const CartItem = (
-  { id, imageUrl, price, title, amount }: Cart,
+  { id, product: { imageUrl, price, title }, amount }: Cart,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
 
   // 장바구니 수량 업데이트
-  const { mutate: updateCart } = useMutation(
-    ({ id, amount }: { id: string; amount: number }) =>
-      graphqlFetcher(UPDATE_CART, { id, amount }),
-    {
-      onMutate: async ({ id, amount }) => {
-        await queryClient.cancelQueries(QueryKeys.CART);
+  const { mutate: updateCart } = useMutation<
+    Cart,
+    unknown,
+    { id: string; amount: number }
+  >(({ id, amount }) => graphqlFetcher(UPDATE_CART, { id, amount }), {
+    onMutate: async ({ id, amount }) => {
+      await queryClient.cancelQueries(QueryKeys.CART);
 
-        // Snapshot the previous value
-        const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
-          QueryKeys.CART
-        );
+      // Snapshot the previous value
+      const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
+        QueryKeys.CART
+      ) || { cart: [] };
+      if (!prevCart) return null;
 
-        if (!prevCart?.[id]) return prevCart;
+      const targetIndex = prevCart?.findIndex((cartItem) => cartItem.id === id);
+      if (targetIndex === undefined || targetIndex < 0) return prevCart;
 
-        const newCart = {
-          ...(prevCart || {}),
-          [id]: { ...prevCart[id], amount },
-        };
+      const newCart = [...prevCart];
+      newCart.splice(targetIndex, 1, { ...newCart[targetIndex], amount });
 
-        queryClient.setQueryData(QueryKeys.CART, newCart);
-        return prevCart;
-      },
-      onSuccess: (newValue) => {
-        // 아이템 하나에 대한 데이터
-        const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
-          QueryKeys.CART
-        );
-        const newCart = {
-          ...(prevCart || {}),
-          [id]: newValue,
-        };
-        queryClient.setQueryData(QueryKeys.CART, newCart); // Cart 전체에 대한 데이터
-      },
-    }
-  );
+      queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
+      return prevCart;
+    },
+    onSuccess: (updateCart) => {
+      // 아이템 하나에 대한 데이터
+      const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
+        QueryKeys.CART
+      ) || { cart: [] };
+      const targetIndex = prevCart?.findIndex(
+        (cartItem) => cartItem.id === updateCart.id
+      );
+
+      if (!prevCart || targetIndex === undefined || targetIndex < 0) return;
+
+      const newCart = [...prevCart];
+      newCart.splice(targetIndex, 1, updateCart);
+      queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
+    },
+  });
 
   // 장바구니 삭제
   const { mutate: deleteCart } = useMutation(

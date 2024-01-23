@@ -8,8 +8,9 @@ const ProductsDetail = () => {
   const { id } = useParams();
 
   // 데이터 가져오기, type 정의
-  const { data } = useQuery<Product>([QueryKeys.PRODUCTS, id], () =>
-    graphqlFetcher<Product>(GET_PRODUCT, { id })
+  const { data } = useQuery<{ product: Product }>(
+    [QueryKeys.PRODUCTS, id],
+    () => graphqlFetcher<{ product: Product }>(GET_PRODUCT, { id })
   );
 
   if (!data) return null;
@@ -17,7 +18,7 @@ const ProductsDetail = () => {
   return (
     <div>
       <h2>상품상세</h2>
-      <ProductDetail item={data} />
+      <ProductDetail item={data.product} />
     </div>
   );
 };
