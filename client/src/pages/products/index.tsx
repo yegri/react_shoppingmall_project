@@ -14,7 +14,7 @@ const ProductsListPage = () => {
   // 데이터 가져오기, type 정의
   const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<Products>(
-      QueryKeys.PRODUCTS,
+      [QueryKeys.PRODUCTS, false],
       ({ pageParam = "" }) =>
         graphqlFetcher<Products>(GET_PRODUCTS, { cursor: pageParam }),
       {
