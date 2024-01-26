@@ -5,6 +5,7 @@ import GET_PRODUCTS, { Products } from "../../graphql/products";
 import ProductList from "../../assets/components/product/list";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useInfiniteScroll from "../../assets/hooks/useInfiniteScroll";
+import ProductItem from "../../assets/components/product/item";
 
 const ProductsListPage = () => {
   // 무한 스크롤을 위해
@@ -55,7 +56,7 @@ const ProductsListPage = () => {
     <div>
       <h2>상품목록</h2>
 
-      <ProductList list={data?.pages || []} />
+      <ProductList list={data?.pages || []} Item={ProductItem} />
 
       <div ref={fetchMoreRef} />
     </div>

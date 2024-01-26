@@ -5,6 +5,8 @@ import GET_PRODUCTS, { Products } from "../../graphql/products";
 import ProductList from "../../assets/components/product/list";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useInfiniteScroll from "../../assets/hooks/useInfiniteScroll";
+import AdminItem from "../../assets/components/admin/item";
+import AddForm from "../../assets/components/admin/addForm";
 
 const AdminPage = () => {
   // 무한 스크롤을 위해
@@ -38,7 +40,9 @@ const AdminPage = () => {
     <div>
       <h2>관리자 - 상품목록</h2>
 
-      <ProductList list={data?.pages || []} />
+      <AddForm />
+
+      <ProductList list={data?.pages || []} Item={AdminItem} />
 
       <div ref={fetchMoreRef} />
     </div>

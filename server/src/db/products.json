@@ -797,5 +797,13 @@
     "title": "임시상품99",
     "description": "임시상세내용99",
     "createdAt": 1644206841540
+  },
+  {
+    "id": "94101536-7785-40db-8300-39763828cc90",
+    "imageUrl": "https://source.unsplash.com/200x150/?nature/0",
+    "price": 8500,
+    "title": "추가상품",
+    "description": "상세상세",
+    "createdAt": 1706271411897
   }
 ]
