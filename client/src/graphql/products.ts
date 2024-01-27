@@ -9,6 +9,8 @@ export type Product = {
   createdAt: number;
 };
 
+export type MutableProduct = Omit<Product, "id" | "createAt">;
+
 export type Products = {
   products: Product[];
 };

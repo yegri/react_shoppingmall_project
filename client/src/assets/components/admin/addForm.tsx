@@ -1,19 +1,17 @@
 import { SyntheticEvent } from "react";
-import { useMutation, QueryClient } from "react-query";
-import { ADD_PRODUCT, Product, Products } from "../../../graphql/products";
+import { useMutation } from "react-query";
+import { ADD_PRODUCT, MutableProduct } from "../../../graphql/products";
 import { QueryKeys, getClient, graphqlFetcher } from "../../../queryClient";
 import arrToObj from "../../../util/arrToObj";
-
-type OmittedProduct = Omit<Product, "id" | "createdAt">;
 
 const AddForm = () => {
   const queryClient = getClient();
 
   const { mutate: addProduct } = useMutation(
-    ({ title, imageUrl, price, description }: OmittedProduct) =>
+    ({ title, imageUrl, price, description }: MutableProduct) =>
       graphqlFetcher(ADD_PRODUCT, { title, imageUrl, price, description }),
     {
-      onSuccess: ({ addProduct }) => {
+      onSuccess: () => {
         // (1) 데이터를 stale처리해서 재요청하게끔 함. =>
         // (장) 코드가 간단하다. 쉽다.
         // (단) 서버요청 또 한다.
@@ -42,7 +40,7 @@ const AddForm = () => {
     e.preventDefault(); // 다른 페이지로 이동하는 것 방지
     const formData = arrToObj([...new FormData(e.target as HTMLFormElement)]);
     formData.price = Number(formData.price); // price만 number로 형변환
-    addProduct(formData as OmittedProduct);
+    addProduct(formData as MutableProduct);
   };
 
   return (
