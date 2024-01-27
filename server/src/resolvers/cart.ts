@@ -75,6 +75,16 @@ const cartResolver: Resolver = {
         (cartItem) => !ids.includes(cartItem.id)
       );
 
+      if (
+        newCartData.some((item) => {
+          const product = db.products.find(
+            (product: any) => product.id === item.id
+          );
+          return !product?.createdAt;
+        })
+      )
+        throw new Error("삭제된 상품이 포함되어 결제를 진행할 수 없습니다.");
+
       db.cart = newCartData;
       setJSON(db.cart);
       return ids;

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  DELETE_PRODUCT,
   MutableProduct,
   Product,
   UPDATE_PRODUCT,
@@ -26,6 +27,7 @@ const AdminItem = ({
 }) => {
   const queryClient = getClient();
 
+  // 상품 수정하기
   const { mutate: updateProduct } = useMutation(
     ({ title, imageUrl, price, description }: MutableProduct) =>
       graphqlFetcher(UPDATE_PRODUCT, {
@@ -47,12 +49,33 @@ const AdminItem = ({
     }
   );
 
+  // 상품 삭제하기
+  const { mutate: deleteProduct } = useMutation(
+    ({ id }: { id: String }) =>
+      graphqlFetcher(DELETE_PRODUCT, {
+        id,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QueryKeys.PRODUCTS, {
+          exact: false,
+          refetchInactive: true,
+        });
+      },
+    }
+  );
+
   // 제출 버튼
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault(); // 다른 페이지로 이동하는 것 방지
     const formData = arrToObj([...new FormData(e.target as HTMLFormElement)]);
     formData.price = Number(formData.price); // price만 number로 형변환
     updateProduct(formData as MutableProduct);
+  };
+
+  // 아이템 삭제
+  const deleteItem = () => {
+    deleteProduct({ id });
   };
 
   if (isEditing)
@@ -95,8 +118,12 @@ const AdminItem = ({
 
       {!createdAt && <span>삭제된 상품</span>}
 
-      <button className="product-item__add-cart" onClick={startEdit}>
-        어드민!!!
+      <button className="product-item__update-item" onClick={startEdit}>
+        수정
+      </button>
+
+      <button className="product-item__delete-item" onClick={deleteItem}>
+        삭제
       </button>
     </li>
   );

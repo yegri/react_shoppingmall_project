@@ -21,6 +21,9 @@ const CartList = ({ items }: { items: Cart[] }) => {
 
   const [formData, setFormData] = useState<FormData>();
 
+  // 관리자에서 삭제하면 체크박스 체크 안 되게 하기 위함
+  const enabledItem = items.filter((item) => item.product.createdAt);
+
   // 개별 아이템 선택 시
   const setAllCheckedFromItems = () => {
     if (!formRef.current) return;
@@ -32,7 +35,7 @@ const CartList = ({ items }: { items: Cart[] }) => {
     const selectedCount = data.getAll("select-item").length;
 
     // 개별 아이템의 체크박스가 변경되었을 때
-    const allChecked = selectedCount === items.length;
+    const allChecked = selectedCount === enabledItem.length;
 
     formRef.current.querySelector<HTMLInputElement>(
       ".cart_select-all"
@@ -41,9 +44,13 @@ const CartList = ({ items }: { items: Cart[] }) => {
 
   const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
     const allChecked = targetInput.checked;
-    checkboxRefs.forEach((inputElem) => {
-      inputElem.current!.checked = allChecked;
-    });
+    checkboxRefs
+      .filter((inputElem) => {
+        return !inputElem.current!.disabled;
+      })
+      .forEach((inputElem) => {
+        inputElem.current!.checked = allChecked;
+      });
   };
 
   // 전체 선택 핸들러 함수

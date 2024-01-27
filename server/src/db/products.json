@@ -779,39 +779,34 @@
     "imageUrl": "https://source.unsplash.com/200x150/?nature/97",
     "price": 4500,
     "title": "임시상품97",
-    "description": "임시상세내용97",
-    "createdAt": 1644170841540
+    "description": "임시상세내용97"
   },
   {
     "id": "d7707727-b854-4ebe-a81a-205a04723f81",
     "imageUrl": "https://source.unsplash.com/200x150/?nature/98",
     "price": 1500,
     "title": "임시상품98",
-    "description": "임시상세내용98",
-    "createdAt": 1644188841540
+    "description": "임시상세내용98"
   },
   {
     "id": "05b9901f-167b-47be-aacf-5ef9626d605f",
     "imageUrl": "https://source.unsplash.com/200x150/?nature/99",
     "price": 1500,
     "title": "임시상품99",
-    "description": "임시상세내용99",
-    "createdAt": 1644206841540
+    "description": "임시상세내용99"
   },
   {
     "id": "94101536-7785-40db-8300-39763828cc90",
     "imageUrl": "https://source.unsplash.com/200x150/?nature/0",
     "price": 8511,
     "title": "추가상품111",
-    "description": "상세상세111",
-    "createdAt": 1706271411897
+    "description": "상세상세111"
   },
   {
     "id": "ac4c09e8-044e-4bd1-9717-15dd52232c23",
     "imageUrl": "https://source.unsplash.com/200x150/?nature/1",
     "price": 5000,
     "title": "dkdk",
-    "description": "dkdkdk",
-    "createdAt": 1706333471670
+    "description": "dkdkdk"
   }
 ]

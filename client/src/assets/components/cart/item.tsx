@@ -5,7 +5,7 @@ import { forwardRef, ForwardedRef, SyntheticEvent } from "react";
 import ItemData from "./itemData";
 
 const CartItem = (
-  { id, product: { imageUrl, price, title }, amount }: Cart,
+  { id, product: { imageUrl, price, title, createdAt }, amount }: Cart,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
@@ -79,16 +79,22 @@ const CartItem = (
         name={`select-item`}
         ref={ref}
         data-id={id}
+        disabled={!createdAt}
       />
+
       <ItemData imageUrl={imageUrl} price={price} title={title} />
 
-      <input
-        type="number"
-        className="cart-item__amount"
-        value={amount}
-        onChange={handleUpdateAmount}
-        min={1}
-      />
+      {!createdAt ? (
+        <div>삭제된 상품입니다</div>
+      ) : (
+        <input
+          type="number"
+          className="cart-item__amount"
+          value={amount}
+          onChange={handleUpdateAmount}
+          min={1}
+        />
+      )}
 
       <button
         className="cart-item__button"
