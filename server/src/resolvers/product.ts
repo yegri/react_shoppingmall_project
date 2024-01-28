@@ -19,7 +19,6 @@ import {
 } from "firebase/firestore";
 
 const PAGE_SIZE = 15;
-const setJSON = (data: Products) => writeDB(DBField.PRODUCTS, data);
 
 const productResolver: Resolver = {
   Query: {
@@ -34,7 +33,7 @@ const productResolver: Resolver = {
       const q = query(products, ...queryOptions, limit(PAGE_SIZE)); // 5️⃣ 번
       const snapshot = await getDocs(q);
       const data: DocumentData[] = [];
-      console.log(snapshot);
+
       snapshot.forEach(
         (
           doc // 6️⃣ 번
@@ -77,7 +76,10 @@ const productResolver: Resolver = {
     updateProduct: async (parent, { id, ...data }) => {
       const productRef = doc(db, "products", id);
       if (!productRef) throw new Error("상품이 없습니다.");
-      await updateDoc(productRef, data);
+      await updateDoc(productRef, {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
       const snap = await getDoc(productRef);
       return {
         ...snap.data(),

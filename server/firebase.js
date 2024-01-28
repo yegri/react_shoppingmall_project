@@ -8,12 +8,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.fb_apiKey,
-  authDomain: process.env.fb_authDomain,
-  projectId: process.env.fb_projectId,
-  storageBucket: process.env.fb_storageBucket,
-  messagingSenderId: process.env.fb_messagingSenderId,
-  appId: process.env.fb_appId,
+  apiKey: "AIzaSyCpqFA3Gfuj4UUkQNMURHl7hc2_UHM1PxE",
+  authDomain: "feyegri-shop.firebaseapp.com",
+  projectId: "feyegri-shop",
+  storageBucket: "feyegri-shop.appspot.com",
+  messagingSenderId: "486345380517",
+  appId: "1:486345380517:web:4e62e68d399ca46093734c",
 };
 
 // Initialize Firebase

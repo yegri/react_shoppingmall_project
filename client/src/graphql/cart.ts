@@ -28,7 +28,7 @@ const GET_CART = gql`
 // 장바구니에 추가
 export const ADD_CART = gql`
   mutation ADD_CART($id: ID!) {
-    addCart(id: $id) {
+    addCart(productId: $id) {
       id
       amount
       product {
@@ -46,7 +46,7 @@ export const ADD_CART = gql`
 // 장바구니 삭제
 export const DELETE_CART = gql`
   mutation DELETE_CART($id: ID!) {
-    deleteCart(id: $id)
+    deleteCart(cartId: $id)
   }
 `;
 

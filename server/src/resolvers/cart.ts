@@ -15,8 +15,6 @@ import {
   where,
 } from "firebase/firestore";
 
-const setJSON = (data: Cart) => writeDB(DBField.CART, data);
-
 const cartResolver: Resolver = {
   Query: {
     cart: async (parent, args) => {
@@ -86,7 +84,7 @@ const cartResolver: Resolver = {
 
     deleteCart: async (parent, { cartId }) => {
       const cartRef = doc(db, "cart", cartId);
-      if (!cartRef) throw Error("장바구니 정보가 없다");
+      if (!cartRef) throw new Error("장바구니 정보가 없습니다");
       await deleteDoc(cartRef);
       return cartId;
     },
