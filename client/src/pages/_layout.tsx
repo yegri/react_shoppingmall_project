@@ -5,12 +5,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { getClient } from "../queryClient";
 import "../scss/index.scss";
 import Gnb from "../assets/components/gnb";
-// import { worker } from "../mocks/browser";
 import { RecoilRoot } from "recoil";
-
-// if (import.meta.env.DEV) {
-//   worker.start();
-// }
 
 const Layout: React.FC = () => {
   const queryClient = getClient();
