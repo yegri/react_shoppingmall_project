@@ -75,11 +75,14 @@ const productResolver: Resolver = {
 
     updateProduct: async (parent, { id, ...data }) => {
       const productRef = doc(db, "products", id);
+
       if (!productRef) throw new Error("상품이 없습니다.");
+
       await updateDoc(productRef, {
         ...data,
         createdAt: serverTimestamp(),
       });
+
       const snap = await getDoc(productRef);
       return {
         ...snap.data(),
